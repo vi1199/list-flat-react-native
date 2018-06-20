@@ -5,7 +5,7 @@ import text from '../../styles/text';
 const styles= StyleSheet.create({
     row: {
         paddingHorizontal: 20,
-        paddingVertical: 15,
+        paddingVertical: 20,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -17,9 +17,9 @@ const styles= StyleSheet.create({
     },
     separator:{
         marginLeft: 20,
-        backgroundColor: color.grey700,
+        backgroundColor: color.grey500,
         flex: 1,
-        height: StyleSheet.hairlineWidth
+        height: 1
     }
 });
 

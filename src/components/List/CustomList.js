@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import styles from './styles';
 
-const CustomList = ({text, selected, onPress}) => (
+export const CustomList = ({text, selected, onPress}) => (
     <TouchableHighlight onPress= {onPress}>
         <View style= {styles.row}>
             <Text style= {styles.text}>{text}</Text>
@@ -17,4 +17,13 @@ const CustomList = ({text, selected, onPress}) => (
     </TouchableHighlight>
 );
 
-export default CustomList;
+export const ThemeList = ({text, selected, onPress}) => (
+    <TouchableHighlight onPress= {onPress}>
+        <View style= {styles.row}>
+            <Text style= {styles.text}>{text}</Text>
+            {
+                selected? <Text> @ </Text>: null
+            }
+        </View>
+    </TouchableHighlight>
+)

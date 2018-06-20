@@ -1,3 +1,15 @@
-import { StackNavigator, TabNavigator } from 'react-navigation';
+import { StackNavigator } from 'react-navigation';
 
-import App from '../App.js';
+import Home from '../screens/Home';
+import Options from '../screens/Options';
+import Themes from '../screens/Themes';
+
+export const Root = StackNavigator(
+    {
+        Home: { screen: Home },
+        Themes: { screen: Themes }
+    },
+    {
+        initialRouteName: 'Home'
+    }
+);
