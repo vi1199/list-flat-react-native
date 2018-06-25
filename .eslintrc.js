@@ -6,7 +6,7 @@ module.exports = {
     "extends": "eslint:recommended",
     "parserOptions": {
         "sourceType": "module"
-    },
+    },  
     "rules": {
         "accessor-pairs": "error",
         "array-bracket-newline": "error",
