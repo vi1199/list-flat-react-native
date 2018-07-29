@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { ScrollView, FlatList, View, TouchableHighlight, Text } from 'react-native';
 import { ThemeList, Separator } from '../components/List/CustomList';
 import themeColor from '../data/themeColor';
+import { CustomText } from '../components/Text';
 
 
 class Themes extends Component {
@@ -28,9 +29,9 @@ class Themes extends Component {
                     keyExtractor= {(item) => item}
                 />
                 <View>
-                    <TouchableHighlight onPress= {this.evaluateExp}>
-                        <Text>Supp</Text>
-                    </TouchableHighlight>
+                    <CustomText
+                        text = {'hello'}>
+                    </CustomText>
                 </View>
            </View>
         )

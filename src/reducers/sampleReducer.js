@@ -20,7 +20,6 @@ export default sampleReducer = (state = initialState, action) => {
                 data: action.data,
                 isFetching: false
             }
-        
         case actionTypes.RETRIEVE_MOVIES_FAILURE:
             return {
                 ...state,

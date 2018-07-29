@@ -7,10 +7,13 @@ import {
     TouchableOpacity,
     Alert
 } from 'react-native';
-import states from '../data/states';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import { connect } from 'react-redux';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {fetchSuccess, fetchError, fetchLatestMovies, fetchPending} from '../actions/index';
 import { CustomList } from '../components/List/CustomList';
 import color from '../styles/color';
+import states from '../data/states';
+
 
 const TEMP_CURRENT_STATE= 'Haryana';
 
@@ -38,6 +41,7 @@ class Home extends Component {
     }
     componentDidMount() {
         this.props.navigation.setParams({headerIconPress: this.handleSettingsIconPress})
+        this.props.fetchLatestMovies
     }
     
     handleSettingsIconPress = () =>{
@@ -55,6 +59,7 @@ class Home extends Component {
         />
     )
     render(){
+        console.log('data from reducers are ---', this.props.movies)
         return(
             <View style= {{flex: 1}}>
                 <FlatList
@@ -67,4 +72,17 @@ class Home extends Component {
     }
 }
 
-export default Home;
+const mapStateToProps = state => {
+    console.log('this is map state ----->>>>>>', state)
+    return {
+        movies : state
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    dispatch(fetchLatestMovies);
+}
+
+
+
+export default connect(mapStateToProps)(Home);
