@@ -1,26 +1,30 @@
-import * as actionTypes from '../actions/actionTypes';
+import {
+    RETRIEVE_MOVIES_FETCHING,
+    RETRIEVE_MOVIES_SUCCESS,
+    RETRIEVE_MOVIES_FAILURE
+} from '../actions/actionTypes';
 
 const initialState= {
-    data: [],
     isFetching: false,
+    data: [],
     error: false
-}
+};
 
-export default sampleReducer = (state = initialState, action) => {
+const sampleReducer = (state = initialState, action) => {
     switch(action.Type) {
-        case actionTypes.RETRIEVE_MOVIES_FETCHING:
+        case RETRIEVE_MOVIES_FETCHING:
             return {
                 ...state,
                 data: [],
                 isFetching: true
             }
-        case actionTypes.RETRIEVE_MOVIES_SUCCESS: 
+        case RETRIEVE_MOVIES_SUCCESS: 
             return {
                 ...state,
                 data: action.data,
                 isFetching: false
             }
-        case actionTypes.RETRIEVE_MOVIES_FAILURE:
+        case RETRIEVE_MOVIES_FAILURE:
             return {
                 ...state,
                 isFetching: false,
@@ -31,3 +35,5 @@ export default sampleReducer = (state = initialState, action) => {
             return state
     }
 }
+
+export default sampleReducer;

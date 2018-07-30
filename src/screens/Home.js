@@ -4,12 +4,14 @@ import {
     StatusBar,
     FlatList,
     Button,
+    Text,
     TouchableOpacity,
-    Alert
+    Alert,
+    ActivityIndicator
 } from 'react-native';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {fetchSuccess, fetchError, fetchLatestMovies, fetchPending} from '../actions/index';
+import { fetchLatestMovies } from '../actions/index';
 import { CustomList } from '../components/List/CustomList';
 import color from '../styles/color';
 import states from '../data/states';
@@ -41,7 +43,7 @@ class Home extends Component {
     }
     componentDidMount() {
         this.props.navigation.setParams({headerIconPress: this.handleSettingsIconPress})
-        this.props.fetchLatestMovies
+        this.props.fetchLatestMovies();
     }
     
     handleSettingsIconPress = () =>{
@@ -58,31 +60,32 @@ class Home extends Component {
             onPress= {this.handlelistItemPress}
         />
     )
+    showLoader = () => {
+        
+    }
     render(){
-        console.log('data from reducers are ---', this.props.movies)
-        return(
-            <View style= {{flex: 1}}>
-                <FlatList
-                    data= {states}
-                    renderItem= {this.renderListItem}
-                    keyExtractor= {(item) => item}
-                />
-            </View>
-        )
+        if (this.props.movies.sampleReducer.isFetching) {
+            return (
+                <View style = {{flex: 1, justifyContent: 'center', backgroundColor: color.orange500}}>
+                    <ActivityIndicator 
+                        size = 'small'
+                        animating = {true}
+                        color = {color.blue500}/>
+                </View>
+            )
+        } else {
+            return(
+                <View>
+                </View>
+            )
+        }
     }
 }
 
 const mapStateToProps = state => {
-    console.log('this is map state ----->>>>>>', state)
     return {
         movies : state
     }
 }
 
-const mapDispatchToProps = dispatch => {
-    dispatch(fetchLatestMovies);
-}
-
-
-
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps, {fetchLatestMovies})(Home);

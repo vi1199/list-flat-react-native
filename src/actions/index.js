@@ -1,19 +1,23 @@
 import axios from 'axios';
 import { connect } from 'react-redux';
-import * as actionTypes from './actionTypes';
+import {
+    RETRIEVE_MOVIES_FETCHING,
+    RETRIEVE_MOVIES_SUCCESS,
+    RETRIEVE_MOVIES_FAILURE
+} from './actionTypes';
 import { BASE_API, LATEST_MOVIES, API_KEY } from '../utils/constants';
 
 export const fetchPending = () => ({
-    type: actionTypes.RETRIEVE_MOVIES_FETCHING
+    type: RETRIEVE_MOVIES_FETCHING
 });
 
 export const fetchSuccess = (response) => ({
-    type: actionTypes.RETRIEVE_MOVIES_SUCCESS,
+    type: RETRIEVE_MOVIES_SUCCESS,
     data: response
 });
 
 export const fetchError = (error) => ({
-    type: actionTypes.RETRIEVE_MOVIES_FAILURE,
+    type: RETRIEVE_MOVIES_FAILURE,
     data: error
 });
 
