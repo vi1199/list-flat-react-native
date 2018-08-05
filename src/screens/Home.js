@@ -1,29 +1,25 @@
 import React, { Component } from 'react';
 import { 
-    View,
     StatusBar,
     FlatList,
     Button,
-    Text,
     TouchableOpacity,
     Alert,
-    ActivityIndicator
 } from 'react-native';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { fetchLatestMovies } from '../actions/index';
 import { CustomList } from '../components/List/CustomList';
 import color from '../styles/color';
-import states from '../data/states';
-
-
-const TEMP_CURRENT_STATE= 'Haryana';
+import CustomView from '../components/CustomView';
+import Activityloader from '../components/ActivityLoader';
+import CustomText from '../components/CustomText';
 
 class Home extends Component {
     static navigationOptions = ({ navigation }) => {
         const params= navigation.state.params || {};
         return {
-            title: 'Pick One',
+            title: 'Your Daily Entertainment',
             headerTintColor: color.grey700,
             headerTitleStyle: {
                 fontWeight: '300',
@@ -43,49 +39,35 @@ class Home extends Component {
     }
     componentDidMount() {
         this.props.navigation.setParams({headerIconPress: this.handleSettingsIconPress})
-        this.props.fetchLatestMovies();
+        this.props.dispatch(fetchLatestMovies());
     }
-    
     handleSettingsIconPress = () =>{
         console.log('icon pressed');
         this.props.navigation.navigate('Themes');
     }
-    handlelistItemPress = () => {
-        console.log('row pressed')
-    }
-    renderListItem = ({item}) => (
-        <CustomList 
-            text= {item}
-            selected= {item === TEMP_CURRENT_STATE}
-            onPress= {this.handlelistItemPress}
-        />
-    )
-    showLoader = () => {
-        
-    }
     render(){
         if (this.props.movies.sampleReducer.isFetching) {
-            return (
-                <View style = {{flex: 1, justifyContent: 'center', backgroundColor: color.orange500}}>
-                    <ActivityIndicator 
-                        size = 'small'
-                        animating = {true}
-                        color = {color.blue500}/>
-                </View>
-            )
-        } else {
             return(
-                <View>
-                </View>
+                <CustomView flex= {1} justifyContent= {'center'} alignItems= {'center'}>
+                    <Activityloader
+                        size= {'small'}
+                        color= {color.blue500}/>
+                    <CustomText fontSize= {15} color= {color.blue500}>Loading...</CustomText>
+                </CustomView>
+            )
+        }else {
+            return(
+                <CustomView backgroundColor= {color.lightgreen500} flex= {1}>
+                    
+                </CustomView>
             )
         }
     }
 }
 
-const mapStateToProps = state => {
-    return {
+const mapStateToProps = state => ({
         movies : state
-    }
-}
+})
 
-export default connect(mapStateToProps, {fetchLatestMovies})(Home);
+
+export default connect(mapStateToProps)(Home);

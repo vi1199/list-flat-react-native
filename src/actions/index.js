@@ -5,7 +5,7 @@ import {
     RETRIEVE_MOVIES_SUCCESS,
     RETRIEVE_MOVIES_FAILURE
 } from './actionTypes';
-import { BASE_API, LATEST_MOVIES, API_KEY } from '../utils/constants';
+import { BASE_API, LATEST_MOVIES, API_KEY, POPULAR } from '../utils/constants';
 
 export const fetchPending = () => ({
     type: RETRIEVE_MOVIES_FETCHING
@@ -24,7 +24,7 @@ export const fetchError = (error) => ({
 export const fetchLatestMovies = () => {
     return (dispatch)=> {
         dispatch(fetchPending());
-        axios.get(`${BASE_API}/${LATEST_MOVIES}?api_key=${API_KEY}`).
+        axios.get(`${BASE_API}/${POPULAR}?api_key=${API_KEY}`).
             then((response)=> {
                 dispatch(fetchSuccess(response));
             }).

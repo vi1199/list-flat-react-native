@@ -11,7 +11,7 @@ const initialState= {
 };
 
 const sampleReducer = (state = initialState, action) => {
-    switch(action.Type) {
+    switch(action.type) {
         case RETRIEVE_MOVIES_FETCHING:
             return {
                 ...state,
