@@ -5,6 +5,8 @@ import {
     Button,
     TouchableOpacity,
     Alert,
+    View,
+    Text
 } from 'react-native';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -37,9 +39,16 @@ class Home extends Component {
             )
         }
     }
+    constructor() {
+        super();
+        this.state= {
+            movies: []
+        }
+    }
     componentDidMount() {
         this.props.navigation.setParams({headerIconPress: this.handleSettingsIconPress})
         this.props.dispatch(fetchLatestMovies());
+
     }
     handleSettingsIconPress = () =>{
         console.log('icon pressed');
@@ -56,9 +65,28 @@ class Home extends Component {
                 </CustomView>
             )
         }else {
+          
             return(
                 <CustomView backgroundColor= {color.lightgreen500} flex= {1}>
-                    
+                    {
+                        this.props.movies.sampleReducer.data.data ? 
+                        this.props.movies.sampleReducer.data.data.results.map((item, idx) => {
+                            return(
+                                <CustomView key= {idx} 
+                                    padding= {3}
+                                    backgroundColor= {color.white}
+                                    elevation= {3}
+                                    borderRadius= {4}
+                                    marginHorizontal= {7}
+                                    marginVertical= {5}>
+                                    <CustomText
+                                        >{item.title}</CustomText>
+                                </CustomView>
+                            )
+                        })
+                        : 
+                        []
+                    }
                 </CustomView>
             )
         }
