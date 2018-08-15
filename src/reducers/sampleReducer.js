@@ -1,7 +1,7 @@
 import {
-    RETRIEVE_MOVIES_FETCHING,
-    RETRIEVE_MOVIES_SUCCESS,
-    RETRIEVE_MOVIES_FAILURE
+    RETRIEVE_LATEST_MOVIES_FETCHING,
+    RETRIEVE_LATEST_MOVIES_SUCCESS,
+    RETRIEVE_LATEST_MOVIES_FAILURE
 } from '../actions/actionTypes';
 
 const initialState= {
@@ -12,19 +12,19 @@ const initialState= {
 
 const sampleReducer = (state = initialState, action) => {
     switch(action.type) {
-        case RETRIEVE_MOVIES_FETCHING:
+        case RETRIEVE_LATEST_MOVIES_FETCHING:
             return {
                 ...state,
                 data: [],
                 isFetching: true
             }
-        case RETRIEVE_MOVIES_SUCCESS: 
+        case RETRIEVE_LATEST_MOVIES_SUCCESS: 
             return {
                 ...state,
                 data: action.data,
                 isFetching: false
             }
-        case RETRIEVE_MOVIES_FAILURE:
+        case RETRIEVE_LATEST_MOVIES_FAILURE:
             return {
                 ...state,
                 isFetching: false,

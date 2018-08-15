@@ -13,6 +13,7 @@ class CustomView extends Component {
         return (
             <View style= {{
                 flex: this.props.flex,
+                flexDirection: this.props.flexDirection,
                 width: this.props.width,
                 height: this.props.height,
 

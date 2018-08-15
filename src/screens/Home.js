@@ -4,18 +4,21 @@ import {
     FlatList,
     Button,
     TouchableOpacity,
+    ScrollView,
+    Image,
     Alert,
     View,
     Text
 } from 'react-native';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { fetchLatestMovies } from '../actions/index';
-import { CustomList } from '../components/List/CustomList';
+import { fetchLatestMovies, fetchUpComingMovies } from '../actions/index';
 import color from '../styles/color';
 import CustomView from '../components/CustomView';
 import Activityloader from '../components/ActivityLoader';
 import CustomText from '../components/CustomText';
+import { BASE_API, POPULAR, API_KEY, BASE_IMAGE_API } from '../utils/constants';
+import { backdrop_sizes, poster_sizes, logo_sizes } from '../styles/images';
 
 class Home extends Component {
     static navigationOptions = ({ navigation }) => {
@@ -42,13 +45,13 @@ class Home extends Component {
     constructor() {
         super();
         this.state= {
-            movies: []
+            
         }
     }
     componentDidMount() {
         this.props.navigation.setParams({headerIconPress: this.handleSettingsIconPress})
         this.props.dispatch(fetchLatestMovies());
-
+     //   this.props.dispatch(fetchUpComingMovies());
     }
     handleSettingsIconPress = () =>{
         console.log('icon pressed');
@@ -65,28 +68,42 @@ class Home extends Component {
                 </CustomView>
             )
         }else {
-          
+          console.log('path is---->>>', `${BASE_API}/${POPULAR}?api_key=${API_KEY}`)
             return(
-                <CustomView backgroundColor= {color.lightgreen500} flex= {1}>
-                    {
-                        this.props.movies.sampleReducer.data.data ? 
-                        this.props.movies.sampleReducer.data.data.results.map((item, idx) => {
-                            return(
-                                <CustomView key= {idx} 
-                                    padding= {3}
-                                    backgroundColor= {color.white}
-                                    elevation= {3}
-                                    borderRadius= {4}
-                                    marginHorizontal= {7}
-                                    marginVertical= {5}>
-                                    <CustomText
-                                        >{item.title}</CustomText>
-                                </CustomView>
-                            )
-                        })
-                        : 
-                        []
-                    }
+                <CustomView
+                    backgroundColor= {color.red500}
+                    padding= {10}>
+                    <CustomView 
+                        backgroundColor= {color.amber500} 
+                        padding= {5}>
+                        <CustomText>Popular</CustomText>
+                        <ScrollView
+                            backgroundColor = {color.blue300}
+                            horizontal
+                            showsHorizontalScrollIndicator= {false}>
+                            {
+                                this.props.movies.sampleReducer.data.data ? 
+                                this.props.movies.sampleReducer.data.data.results.map((item, idx) => {
+                                    return(
+                                        <CustomView key= {idx} 
+                                            flexDirection= {'column'}
+                                            backgroundColor= {'transparent'}
+                                            elevation= {3}
+                                            borderRadius= {7}
+                                            marginHorizontal= {7}
+                                            marginVertical= {5}>
+                                            <Image
+                                                style= {{ height: 220, width: 150, backgroundColor: 'transparent', borderRadius: 7,}}
+                                                resizeMode= 'contain'
+                                                source= {{uri: `${BASE_IMAGE_API}/${poster_sizes.w342}/${item.poster_path}`}} />
+                                        </CustomView>
+                                    )
+                                })
+                                : 
+                                []
+                            }
+                        </ScrollView>
+                    </CustomView>
                 </CustomView>
             )
         }
