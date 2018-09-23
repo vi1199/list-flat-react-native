@@ -4,11 +4,13 @@ import {
     FlatList,
     Button,
     TouchableOpacity,
+    TouchableHighlight,
     ScrollView,
     Image,
     Alert,
     View,
-    Text
+    Text,
+    AsyncStorage
 } from 'react-native';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -51,12 +53,25 @@ class Home extends Component {
     componentDidMount() {
         this.props.navigation.setParams({headerIconPress: this.handleSettingsIconPress})
         this.props.dispatch(fetchLatestMovies());
-     //   this.props.dispatch(fetchUpComingMovies());
+        this.props.dispatch(fetchUpComingMovies());
     }
     handleSettingsIconPress = () =>{
         console.log('icon pressed');
         this.props.navigation.navigate('Themes');
     }
+    getItem = (item) => {
+        console.log('values are', item);
+        this.storeMovie(item.original_title)
+    }
+    storeMovie = async (item) => {
+        try {
+          await AsyncStorage.setItem('movie', item);
+          console.log('saved');
+        } catch (error) {
+          // Error saving data
+          console.log('error');
+        }
+      }
     render(){
         if (this.props.movies.sampleReducer.isFetching) {
             return(
@@ -85,18 +100,22 @@ class Home extends Component {
                                 this.props.movies.sampleReducer.data.data ? 
                                 this.props.movies.sampleReducer.data.data.results.map((item, idx) => {
                                     return(
-                                        <CustomView key= {idx} 
-                                            flexDirection= {'column'}
-                                            backgroundColor= {'transparent'}
-                                            elevation= {3}
-                                            borderRadius= {7}
-                                            marginHorizontal= {7}
-                                            marginVertical= {5}>
-                                            <Image
-                                                style= {{ height: 220, width: 150, backgroundColor: 'transparent', borderRadius: 7,}}
-                                                resizeMode= 'contain'
-                                                source= {{uri: `${BASE_IMAGE_API}/${poster_sizes.w342}/${item.poster_path}`}} />
-                                        </CustomView>
+                                        <TouchableOpacity 
+                                            key= {idx} 
+                                            onPress = {()=> this.getItem(item)}>
+                                            <CustomView 
+                                                flexDirection= {'column'}
+                                                backgroundColor= {'transparent'}
+                                                elevation= {3}
+                                                borderRadius= {7}
+                                                marginHorizontal= {7}
+                                                marginVertical= {5}>
+                                                <Image
+                                                    style= {{ height: 220, width: 150, backgroundColor: 'transparent', borderRadius: 7,}}
+                                                    resizeMode= 'contain'
+                                                    source= {{uri: `${BASE_IMAGE_API}/${poster_sizes.w342}/${item.poster_path}`}} />
+                                            </CustomView>
+                                        </TouchableOpacity>
                                     )
                                 })
                                 : 
